@@ -6,9 +6,9 @@ import openpyxl
 #List of numbers going from 0 to 9
 number_list=[0,1,2,3,4,5,6,7,8,9]
 #List of all capital letters
-caps_letters=["A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z"]
+caps_letters=["A","B","C","D","E","F", "G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 #List of all small letters
-small_letters=["a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z"]
+small_letters=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 #List of some special characters
 special_characters=[" ","!","-","_","?"]
 #List of 4 digit numeric passwords(already generated)
@@ -21,7 +21,7 @@ flag=""
 #---------------------------------------------------------------------------------------------------
 
 #This function writes our generated password into excel
-def write_pass_in_excel__(flag,cell,password_type):
+def write_pass_in_excel__(flag,password_type,name_file='password',cell='A'):
     book=openpyxl.Workbook()
     sheet=book.active
     if flag == 'number':
@@ -31,7 +31,7 @@ def write_pass_in_excel__(flag,cell,password_type):
     sheet[f'{cell}1']=f"Passwords-{password_type}"
     for i in range(len(passwords)):
         sheet[f'{cell}{i+2}']=passwords[i]
-    book.save('all_passwords.xlsx')
+    book.save(f'{name_file}.xlsx')
     book.close()
 
 #---------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ def write_pass_in_excel__(flag,cell,password_type):
 def generate_number_passwords():
     global number_passwords
     counter_number_passwords_generated=0
-    while counter_number_passwords_generated <= 50:
+    while counter_number_passwords_generated <= 49:
         password=f"{random.choice(number_list)}{random.choice(number_list)}{random.choice(number_list)}{random.choice(number_list)}"
         if password not in number_passwords:
             number_passwords.append(password)
@@ -51,7 +51,7 @@ def generate_number_passwords():
 #Runs the function which generates the password
 generate_number_passwords()
 #Calls the function which writes the generated passwords in excel,but has critereas
-write_pass_in_excel__("number",'A',"4 digit_numeric")
+write_pass_in_excel__("number","4 digit_numeric","Number",'A')
 
 #--  --  --  --  --  --  --  --  --  -- 
 
@@ -59,7 +59,7 @@ write_pass_in_excel__("number",'A',"4 digit_numeric")
 def generate_strong_passwords():
     global strong_passwords
     counter_strong_passwords_generated=0
-    while counter_strong_passwords_generated <= 50:
+    while counter_strong_passwords_generated <= 49:
         password=f"{random.choice(caps_letters)}{random.choice(small_letters)}{random.choice(special_characters)}{random.choice(number_list)}"
         if password not in strong_passwords:
             strong_passwords.append(password)
@@ -70,7 +70,7 @@ def generate_strong_passwords():
 #Runs the function which generates the password
 generate_strong_passwords()
 #Calls the function which writes the generated passwords in excel,but has critereas
-write_pass_in_excel__("strong",'B',"4 digit_strong")
+write_pass_in_excel__("strong","4 digit_strong","Strong",'A')
 
 '''print(number_passwords)
 print(strong_passwords)'''
